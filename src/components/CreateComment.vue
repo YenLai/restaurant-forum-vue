@@ -27,8 +27,7 @@ export default {
   },
   methods: {
     handleSubmit() {
-      this.$emit("after-create-comment", {
-        commentId: 3000000,
+      this.$emit("create-comment", {
         restaurantId: this.restaurantId,
         text: this.text,
       });
@@ -37,4 +36,10 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.form-group {
+  margin: 21px 0 8px;
+}
+</style>
 

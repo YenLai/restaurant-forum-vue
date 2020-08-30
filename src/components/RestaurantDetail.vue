@@ -53,6 +53,9 @@
 </template>
 
 <script>
+import userAPI from "../apis/users";
+import { Toast } from "../utils/helpers";
+
 export default {
   props: {
     initialRestaurant: {
@@ -65,19 +68,76 @@ export default {
       restaurant: this.initialRestaurant,
     };
   },
+  watch: {
+    initialRestaurant(newValue) {
+      this.restaurant = {
+        ...this.restaurant,
+        ...newValue,
+      };
+    },
+  },
   methods: {
-    addFavorite() {
-      this.restaurant.isFavorited = true;
+    async addFavorite() {
+      try {
+        this.restaurant.isFavorited = true;
+        const response = await userAPI.addFavorite(this.restaurant.id);
+        if (response.data.status !== "success")
+          throw new Error("can not add favorite");
+      } catch (error) {
+        Toast.fire({
+          icon: "error",
+          title: error,
+        });
+      }
     },
-    deleteFavorite() {
-      this.restaurant.isFavorited = false;
+    async deleteFavorite() {
+      try {
+        this.restaurant.isFavorited = false;
+        const response = await userAPI.deleteFavorite(this.restaurant.id);
+        if (response.data.status !== "success")
+          throw new Error("can not add favorite");
+      } catch (error) {
+        Toast.fire({
+          icon: "error",
+          title: error,
+        });
+      }
     },
-    addLike() {
-      this.restaurant.isLiked = true;
+    async addLike() {
+      try {
+        this.restaurant.isLiked = true;
+        const response = await userAPI.addLike(this.restaurant.id);
+        if (response.data.status !== "success")
+          throw new Error("can not add like");
+      } catch (error) {
+        Toast.fire({
+          icon: "error",
+          title: error,
+        });
+      }
     },
-    deleteLike() {
-      this.restaurant.isLiked = false;
+    async deleteLike() {
+      try {
+        this.restaurant.isLiked = false;
+        const response = await userAPI.deleteLike(this.restaurant.id);
+        if (response.data.status !== "success")
+          throw new Error("can not delete like");
+      } catch (error) {
+        Toast.fire({
+          icon: "error",
+          title: error,
+        });
+      }
     },
   },
 };
 </script>
+
+<style scoped>
+.col-lg-8 p,
+.contact-info-wrap li,
+.contact-info-wrap strong {
+  font-family: serif;
+  font-size: 17px;
+}
+</style>

@@ -8,10 +8,13 @@
   </div>
 </template>
 
+
 <script>
 import "bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Navbar from "./components/Navbar";
+import "./assets/application.css";
+
 export default {
   components: {
     Navbar,
@@ -20,3 +23,8 @@ export default {
 </script>
 
 
+<style scoped>
+main {
+  margin-top: 65px !important;
+}
+</style>

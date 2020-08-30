@@ -1,18 +1,18 @@
 <template>
   <div class="row no-gutters">
     <div class="col-md-4">
-      <img :src="profile.image" />
+      <img :src="profile._user.image" class="img-thumbnail" />
     </div>
     <div class="col-md-8">
       <div class="card-body">
-        <h5 class="card-title">{{profile.name}}</h5>
-        <p class="card-text">{{profile.email}}</p>
+        <h5 class="card-title">{{profile._user.name}}</h5>
+        <p class="card-text">{{profile._user.email}}</p>
         <ul class="list-unstyled list-inline">
           <li>
-            <strong>{{profile.Comments.length}}</strong> 已評論餐廳
+            <strong>{{profile.myComments.length}}</strong> 已評論餐廳
           </li>
           <li>
-            <strong>{{profile.FavoritedRestaurants.length}}</strong> 收藏的餐廳
+            <strong>{{profile.Favorited.length}}</strong> 收藏的餐廳
           </li>
           <li>
             <strong>{{profile.Followings.length}}</strong> followings (追蹤者)
@@ -21,25 +21,30 @@
             <strong>{{profile.Followers.length}}</strong> followers (追隨者)
           </li>
         </ul>
-        <template v-if="profile.isAdmin">
+        <template v-if="profile.isCurrentUser">
           <router-link
-            :to="{ name: 'user-edit', params: { id: profile.id } }"
+            :to="{ name: 'user-edit', params: { id: profile._user.id } }"
             class="btn btn-primary mr-3"
           >Edit</router-link>
         </template>
 
-        <form action="/following/3?_method=DELETE" method="POST" style="display: contents;">
+        <form
+          action="/following/3?_method=DELETE"
+          method="POST"
+          style="display: contents;"
+          v-if="!profile.isCurrentUser"
+        >
           <button
-            v-if="isFollowed"
+            v-if="profile.isFollowing"
             type="submit"
             class="btn btn-danger"
-            @click.stop.prevent="handleFollowButton(isFollowed)"
+            @click.stop.prevent="handleDelFollowship(profile._user.id)"
           >取消追蹤</button>
           <button
             v-else
             type="submit"
             class="btn btn-primary"
-            @click.stop.prevent="handleFollowButton(isFollowed)"
+            @click.stop.prevent="handleAddFollowship(profile._user.id)"
           >追蹤</button>
         </form>
       </div>
@@ -54,15 +59,15 @@ export default {
       type: Object,
       require: true,
     },
-    isFollowed: {
-      type: Boolean,
-      require: true,
-    },
   },
   methods: {
-    handleFollowButton(isFollowed) {
-      this.$emit("after-handel-followship", isFollowed);
+    handleAddFollowship(userId) {
+      this.$emit("after-add-followship", userId);
+    },
+    handleDelFollowship(userId) {
+      this.$emit("after-del-followship", userId);
     },
   },
 };
 </script>
+
