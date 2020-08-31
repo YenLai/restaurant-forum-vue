@@ -75,6 +75,9 @@
 </template>
 
 <script>
+import authorizationAPI from "../apis/authorization";
+import { Toast } from "../utils/helpers";
+
 export default {
   data() {
     return {
@@ -82,18 +85,36 @@ export default {
       email: "",
       password: "",
       passwordCheck: "",
+      isProcessing: false,
     };
   },
   methods: {
-    handleSubmit() {
-      const data = JSON.stringify({
-        name: this.name,
-        email: this.email,
-        password: this.password,
-        passwordCheck: this.passwordCheck,
-      });
+    async handleSubmit() {
+      try {
+        this.isProcessing = true;
 
-      console.log("data", data);
+        const response = await authorizationAPI.signUp({
+          name: this.name,
+          email: this.email,
+          password: this.password,
+          passwordCheck: this.passwordCheck,
+        });
+        this.isProcessing = false;
+        const { data } = response;
+
+        if (data.status !== "success") throw new Error(data.message);
+        this.$router.push("/signin");
+        Toast.fire({
+          icon: "success",
+          title: data.message,
+        });
+      } catch (error) {
+        this.isProcessing = false;
+        Toast.fire({
+          icon: "error",
+          title: error,
+        });
+      }
     },
   },
 };

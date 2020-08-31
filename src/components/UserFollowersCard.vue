@@ -3,10 +3,12 @@
     <div class="card-header">
       <strong>{{followers.length}}</strong> followers (追隨者)
     </div>
-    <div v-for="follower in followers" :key="follower.id" class="card-body">
-      <router-link :to="{ name: 'user-profile', params: {id: follower.id} }">
-        <img :src="follower.image" width="60" height="60" class="avatar" />
-      </router-link>
+    <div class="card-body">
+      <template v-for="follower in followers">
+        <router-link :to="{ name: 'user-profile', params: {id: follower.id} }" :key="follower.id">
+          <img :src="follower.image" width="60" height="60" class="avatar" />
+        </router-link>
+      </template>
     </div>
   </div>
 </template>

@@ -58,7 +58,6 @@ export default {
     async setUsers() {
       try {
         const response = await adminAPI.getUsers();
-        console.log(response);
         if (response.statusText !== "OK")
           throw new Error("暫時無法取得使用者資料，請稍後再試");
         this.users = response.data.users;

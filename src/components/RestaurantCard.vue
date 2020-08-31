@@ -65,7 +65,6 @@ export default {
     async addFavorite(restaurantId) {
       try {
         const response = await userAPI.addFavorite(restaurantId);
-        console.log(response);
         if (response.data.status !== "success")
           throw new Error("無法將餐廳加入最愛，請稍後再試");
 

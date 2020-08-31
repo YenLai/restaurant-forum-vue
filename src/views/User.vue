@@ -59,12 +59,16 @@ export default {
     const { id: userId } = this.$route.params;
     this.fetchData(userId);
   },
+  watch: {
+    profile() {
+      const { id: userId } = this.$route.params;
+      this.fetchData(userId);
+    },
+  },
   methods: {
     async fetchData(userId) {
       try {
-        console.log(`fetch user ${userId} data`);
         const response = await userAPI.getUser(userId);
-        console.log(response.data);
         const { statusText, data } = response;
         if (statusText !== "OK")
           throw new Error("無法取得使用者資料，請稍後再試");

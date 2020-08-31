@@ -35,7 +35,6 @@ export default {
     async fetchRestaurant(restaurantId) {
       try {
         const response = await userAPI.getRestaurant(restaurantId);
-        console.log(response);
         if (response.statusText !== "OK")
           throw new Error("無法讀取dashboard，請稍後再試");
         this.restaurant = response.data.restaurant;

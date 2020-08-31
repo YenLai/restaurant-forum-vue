@@ -75,7 +75,6 @@ export default {
         this.isLoading = true;
         const response = await restAPI.getTopRestaurants();
         this.isLoading = false;
-        console.log(response);
         if (response.statusText !== "OK")
           throw new Error("無法取得熱門餐廳，請稍後再試");
         this.restaurants = response.data.restaurants;
@@ -89,7 +88,6 @@ export default {
     async addFavorite(restaurantId) {
       try {
         const response = await userAPI.addFavorite(restaurantId);
-        console.log(response);
         if (response.data.status !== "success")
           throw new Error("無法將餐廳加入最愛，請稍後再試");
 

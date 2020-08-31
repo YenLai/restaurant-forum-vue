@@ -71,8 +71,6 @@ export default {
           password: this.password,
         });
 
-        console.log(response);
-
         const { data } = response;
 
         if (data.status !== "success") throw new Error(data.message);
