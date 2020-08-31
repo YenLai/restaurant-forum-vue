@@ -1,6 +1,7 @@
 ## 餐廳評論網
 
 此專案為前後分離專案，使用Vue實作前端畫面的渲染，
+
 後端使用Node.js +express 實作RESTful API。
 後端部分請參考[全端開發專案](https://github.com/YenLai/restaurant-forum)
 
@@ -24,7 +25,9 @@ npm run serve
 | user2 | `user2@example.com` | 12345678 |
 
 ### API
+
 [API文件](https://hackmd.io/ZOcy9olYQd2oA_PhCnpALw?view)
+
 **API URL**
 ```
 https://express-restaurant-forum.herokuapp.com/api
